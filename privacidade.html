@@ -20,7 +20,7 @@
 <body>
 
 <h1>Política de Privacidade do Zimi</h1>
-<p class="updated">Última atualização: 4 de agosto de 2026</p>
+<p class="updated">Última atualização: 29 de setembro de 2026</p>
 
 <p>Esta política explica quais dados o aplicativo <strong>Zimi</strong> coleta, por que coleta,
 com quem compartilha e o que você pode fazer a respeito. Ela vale para o app em iOS e Android.</p>
@@ -30,7 +30,9 @@ com quem compartilha e o que você pode fazer a respeito. Ela vale para o app em
 
 <h2>1. Resumo em uma frase</h2>
 <p>O Zimi guarda o que você registra sobre seus treinos e seu corpo para conseguir te mostrar sua
-evolução. Não vendemos seus dados, não usamos publicidade e não temos rastreadores de terceiros.</p>
+evolução. Não vendemos seus dados, não usamos publicidade e não rastreamos você. No Android, um
+componente do Google usado no vídeo de evolução envia métricas técnicas de funcionamento, nunca
+suas fotos (seção 4).</p>
 
 <h2>2. Dados que coletamos</h2>
 
@@ -72,8 +74,9 @@ evolução. Não vendemos seus dados, não usamos publicidade e não temos rastr
 </table>
 
 <p>O Zimi <strong>não</strong> coleta sua localização, sua lista de contatos, seu identificador de
-publicidade nem dados de navegação fora do app. Não há SDK de análise, de publicidade ou de
-rastreamento embarcado.</p>
+publicidade nem dados de navegação fora do app. Não há SDK de publicidade ou de rastreamento
+embarcado. O único componente de terceiro que envia dados técnicos para fora do aparelho é o
+Google ML Kit, só no Android, descrito na seção 4.</p>
 
 <h2>3. Dado pessoal sensível e consentimento</h2>
 <p>Peso corporal e fotos do seu corpo são <strong>dados pessoais sensíveis</strong> pela Lei Geral
@@ -95,13 +98,41 @@ de Proteção de Dados (Lei 13.709/2018, art. 5º, II), porque se referem à sa�
       ficam visíveis para os membros daquele clube.</li>
 </ul>
 
+<h3>Vídeo de evolução</h3>
+<p>Na aba de comparação, você pode juntar suas fotos de progresso num vídeo. Para que as fotos
+fiquem alinhadas umas com as outras, o app localiza em cada foto a posição dos olhos, dos ombros
+e do quadril, e usa esses pontos só para calcular o encaixe da imagem no vídeo.</p>
+<ul>
+  <li>essa análise acontece <strong>inteiramente no seu aparelho</strong>: no iPhone, com o
+      Apple Vision, que faz parte do sistema; no Android, com o Google ML Kit, que roda dentro do
+      app. Nenhuma das duas recebe suas fotos;</li>
+  <li>os pontos encontrados ficam só na memória do app enquanto você monta o vídeo. Eles não são
+      gravados, não vão para o nosso servidor e não são usados para nenhuma outra finalidade;</li>
+  <li>não é reconhecimento facial: o app não identifica quem aparece na foto e não cria nenhum
+      modelo ou assinatura do seu rosto. Ele só descobre onde estão alguns pontos na imagem;</li>
+  <li>o vídeo também é montado no seu aparelho e só sai dele se você decidir compartilhar ou
+      salvar na galeria.</li>
+</ul>
+
 <h2>4. Quem mais tem acesso</h2>
-<p>Usamos um único fornecedor de infraestrutura como operador dos dados:</p>
+<p>Usamos um fornecedor de infraestrutura como operador dos dados e, só no Android, um componente
+do Google:</p>
 <ul>
   <li><strong>Supabase</strong> — hospeda o banco de dados, a autenticação e o armazenamento de
       arquivos. Os dados ficam em servidores fora do Brasil, o que caracteriza transferência
       internacional; ela ocorre com base no seu consentimento e sob as garantias contratuais do
       fornecedor. Política do fornecedor: <a href="https://supabase.com/privacy">supabase.com/privacy</a>.</li>
+  <li><strong>Google ML Kit (só no Android)</strong>: é o componente que localiza os pontos das
+      fotos no vídeo de evolução. Ele roda dentro do aparelho e não recebe suas fotos nem os
+      pontos encontrados. Por funcionamento próprio, ele envia ao Google métricas técnicas: marca,
+      modelo e versão do sistema do aparelho, nome e versão do app, um identificador por
+      instalação (que não identifica você nem o aparelho), tempo de processamento, configuração
+      usada e códigos de erro. O Google usa esses dados para diagnóstico e estatística de uso do
+      componente, envia tudo cifrado e declara não repassar a terceiros. Detalhes em
+      <a href="https://developers.google.com/ml-kit/android-data-disclosure">developers.google.com/ml-kit/android-data-disclosure</a>
+      e na política do Google: <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>.
+      No iPhone não existe equivalente: o Apple Vision faz parte do sistema e o app não envia
+      nada à Apple.</li>
 </ul>
 <p>Não vendemos, alugamos nem cedemos seus dados a terceiros. Só divulgamos informação a
 autoridades mediante ordem judicial ou obrigação legal.</p>
@@ -128,7 +159,9 @@ excluir a conta inteira — em ambos os casos o arquivo sai do seu aparelho.</p>
 pesagens, posts, reações, comentários e os registros das suas fotos de progresso; as imagens
 dessas fotos, que estão no seu aparelho, são apagadas pelo próprio aplicativo no mesmo momento.
 Se você tiver ligado a cópia na galeria do celular, essas cópias são suas e continuam onde
-estão — o Zimi não mexe nelas. Registros técnicos podem permanecer por até 6 meses para fins de
+estão — o Zimi não mexe nelas. O vídeo de evolução fica numa pasta temporária do app, que guarda
+só o último vídeo montado e que o próprio sistema pode limpar; se você salvou o vídeo na galeria,
+essa cópia também é sua. Registros técnicos podem permanecer por até 6 meses para fins de
 segurança. Cópias em backup são sobrescritas no ciclo normal de retenção do fornecedor.</p>
 
 <h2>6. Seus direitos</h2>
@@ -148,7 +181,8 @@ segurança. Cópias em backup são sobrescritas no ciclo normal de retenção do
 <p>O acesso aos dados é restrito por política de segurança no próprio banco: cada registro só
 pode ser lido ou alterado pela conta que o criou. As imagens das fotos de progresso não trafegam
 nem ficam no servidor: são gravadas na área privada do aplicativo dentro do seu aparelho, à qual
-outros aplicativos não têm acesso. O tráfego entre o app e o servidor é cifrado (HTTPS/TLS) e as
+outros aplicativos não têm acesso. A análise das fotos para o vídeo de evolução e a montagem do
+vídeo também acontecem no aparelho. O tráfego entre o app e o servidor é cifrado (HTTPS/TLS) e as
 fotos publicadas em clubes ficam em armazenamento privado. Nenhum sistema é infalível —
 se ocorrer um incidente de segurança relevante, comunicaremos você e a ANPD conforme a lei.</p>
 
