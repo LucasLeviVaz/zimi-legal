@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convite pra um clube no Zimi</title>
+<meta name="robots" content="noindex">
+<!-- O WhatsApp monta o card da prévia só com essas tags (não roda JS), então o texto é
+     genérico: o nome do clube só existe dentro do app. -->
+<meta property="og:title" content="Convite pra um clube no Zimi">
+<meta property="og:description" content="Toque pra abrir o convite no app e entrar no clube.">
+<meta property="og:image" content="https://lucaslevivaz.github.io/zimi-legal/icone.png">
+<meta property="og:type" content="website">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; background: #0D0D0F; color: #F5F5F5;
+         font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+  main { width: 100%; max-width: 24rem; text-align: center; }
+  .icon { width: 76px; height: 76px; border-radius: 18px; }
+  .eyebrow { margin: 1.5rem 0 .25rem; color: #C6FF00; font-size: .75rem; font-weight: 700;
+             letter-spacing: .12em; text-transform: uppercase; }
+  h1 { margin: 0; font-size: 1.75rem; line-height: 1.15; }
+  .lead { margin: .75rem 0 1.75rem; color: #8A8A8E; }
+  .btn { display: block; width: 100%; padding: 1rem; border-radius: 14px; font-weight: 700;
+         text-decoration: none; font-size: 1rem; }
+  .btn-primary { background: #C6FF00; color: #0D0D0F; }
+  .btn-secondary { margin-top: .75rem; border: 1px solid #2A2A2E; color: #F5F5F5; }
+  .store { margin-top: 2.25rem; padding: 1.25rem; border: 1px solid #2A2A2E;
+           border-radius: 20px; background: #1A1A1D; }
+  .store h2 { margin: 0; font-size: 1rem; }
+  .store p { margin: .4rem 0 .5rem; color: #8A8A8E; font-size: .9rem; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="icone.png" alt="Zimi">
+
+  <div id="convite">
+    <p class="eyebrow">Convite</p>
+    <h1>Bora treinar junto</h1>
+    <p class="lead">Chamaram você pra um clube no Zimi. Abra o convite no app pra ver o clube e entrar.</p>
+    <a id="abrir" class="btn btn-primary" href="#">Abrir no Zimi</a>
+    <p id="desktop" class="lead" hidden>Abra este link no celular em que o Zimi está instalado.</p>
+
+    <section class="store">
+      <h2>Ainda não tem o Zimi?</h2>
+      <p>Baixe o app, crie sua conta e depois toque de novo no link do convite.</p>
+      <a id="ios" class="btn btn-secondary" href="https://apps.apple.com/br/app/id6796832421">Baixar na App Store</a>
+      <a id="android" class="btn btn-secondary" href="https://play.google.com/store/apps/details?id=com.zimifit.app">Baixar no Google Play</a>
+    </section>
+  </div>
+
+  <div id="invalido" hidden>
+    <h1 style="margin-top:1.5rem">Convite incompleto</h1>
+    <p class="lead">Esse link chegou cortado. Peça um novo convite pra quem te chamou.</p>
+  </div>
+</main>
+
+<script>
+  // Com o app instalado, o Universal Link / App Link abre o app direto e esta página nem
+  // carrega. Ela aparece pra quem não tem o app e nos casos em que o sistema não intercepta
+  // o link (navegador interno do Instagram, link colado na barra do navegador). Aí ela
+  // repassa pro zimi://, que o app já sabe abrir.
+  (function () {
+    var code = new URLSearchParams(location.search).get("c") || "";
+    if (!/^[A-Za-z0-9]{1,32}$/.test(code)) {
+      document.getElementById("convite").hidden = true;
+      document.getElementById("invalido").hidden = false;
+      return;
+    }
+
+    var ua = navigator.userAgent;
+    var isAndroid = /Android/i.test(ua);
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var path = "community/join/" + code;
+    var abrir = document.getElementById("abrir");
+
+    if (isAndroid) {
+      // intent:// em vez de zimi:// porque o Chrome do Android não abre scheme custom
+      // direto. Com package + fallback, quem não tem o app cai no Google Play.
+      var play = document.getElementById("android").href;
+      abrir.href = "intent://" + path + "#Intent;scheme=zimi;package=com.zimifit.app;" +
+        "S.browser_fallback_url=" + encodeURIComponent(play) + ";end";
+      document.getElementById("ios").hidden = true;
+      // Tentativa automática sem package: se o app não estiver instalado, nada acontece e a
+      // pessoa continua aqui lendo o passo a passo, em vez de ser jogada na loja sem contexto.
+      location.href = "intent://" + path + "#Intent;scheme=zimi;end";
+    } else if (isIOS) {
+      // Sem tentativa automática no iOS: sem o app instalado, o Safari mostra um alerta de
+      // "endereço inválido" antes da página, justo pra quem está chegando agora.
+      abrir.href = "zimi://" + path;
+      document.getElementById("android").hidden = true;
+    } else {
+      abrir.hidden = true;
+      document.getElementById("desktop").hidden = false;
+    }
+  })();
+</script>
+</body>
+</html>
